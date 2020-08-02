@@ -1,10 +1,13 @@
-from scraperbs import ScraperBS
+from src.scraperbs import ScraperBS
 import re
 
 class Movie:
     def __init__(self, name, is_dir=False):
         self.name = name
         self.__corrected_name = self.__correct_name(name)
+        self.__scraper = None
+
+    def find_info(self):
         self.__scraper = ScraperBS(self.name, self.__corrected_name)
 
     def get_original_name(self):

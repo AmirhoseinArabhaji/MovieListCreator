@@ -2,8 +2,11 @@ import requests
 from bs4 import BeautifulSoup
 
 class ScraperBS:
-    __headers = {'User-Agent':
+    __bing_headers = {'User-Agent':
                    'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.106 Safari/537.36'}
+    __imdb_headers = {'User-Agent':
+                   'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.106 Safari/537.36',
+                                'Accept-Language': 'en-US,en;q=0.5'}
     def __init__(self, name, corrected_name=''):
         self.__name = name
         self.__term = name if corrected_name == '' else corrected_name
@@ -26,13 +29,13 @@ class ScraperBS:
 
     def __get_bing_soup(self):
         url = r'https://www.bing.com/search?q={}&setlang=en-us/'.format(self.__term + ' imdb')
-        response = requests.get(url, headers=ScraperBS.__headers)
+        response = requests.get(url, headers=ScraperBS.__bing_headers)
         soup = BeautifulSoup(response.text, 'html.parser')
         return soup
 
     def __get_imdb_soup(self):
         url = r'https://www.imdb.com/title/{}/'.format(self.__imdb_id)
-        response = requests.get(url, headers=ScraperBS.__headers)
+        response = requests.get(url, headers=ScraperBS.__imdb_headers)
         soup = BeautifulSoup(response.text, 'html.parser')
         return soup
 
